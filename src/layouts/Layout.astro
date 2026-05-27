@@ -5,6 +5,33 @@ const {
   title = 'MIO Coffee & Desserts — Binnenkort Geopend · Gorinchem',
   description = 'MIO Coffee & Desserts opent binnenkort in Gorinchem. Romige gelato, warme koffie en verleidelijke desserts.',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://mio-gorinchem.nl');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CafeOrCoffeeShop',
+  name: 'MIO Coffee & Desserts',
+  description: 'Romige gelato, warme koffie en verleidelijke desserts in Gorinchem.',
+  url: 'https://mio-gorinchem.nl',
+  telephone: null,
+  email: 'info@mio-gorinchem.nl',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Kon. Wilhelminalaan 42',
+    postalCode: '4205 EX',
+    addressLocality: 'Gorinchem',
+    addressCountry: 'NL',
+  },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday'], opens: '16:00', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday','Saturday','Sunday'], opens: '12:00', closes: '22:00' },
+  ],
+  servesCuisine: ['Gelato', 'Koffie', 'Desserts'],
+  priceRange: '€€',
+  image: 'https://mio-gorinchem.nl/og-image.jpg',
+  sameAs: [],
+};
 ---
 <!doctype html>
 <html lang="nl">
@@ -14,8 +41,10 @@ const {
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalURL} />
 
   <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content="https://mio-gorinchem.nl/og-image.jpg" />
@@ -24,6 +53,8 @@ const {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
