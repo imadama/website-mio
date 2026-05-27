@@ -1,0 +1,150 @@
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --cream-base:    #EDE0CC;
+  --cream-soft:    #F5ECDB;
+  --champagne:     #C9A876;
+  --gold-rich:     #B8956A;
+  --gold-shimmer:  #E8D4A8;
+  --brown-deep:    #3D2817;
+  --brown-text:    #4A3320;
+  --brown-soft:    #5A4128;
+  --line-gold:     rgba(184, 149, 106, 0.35);
+
+  --serif-display: 'Cinzel', serif;
+  --serif-body:    'Cormorant Garamond', Georgia, serif;
+  --sans:          'Inter', system-ui, sans-serif;
+}
+
+/* ===== BASE ===== */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--cream-base);
+  color: var(--brown-text);
+  font-family: var(--serif-body);
+  overflow-x: hidden;
+}
+
+/* Paper noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.55 0 0 0 0 0.35 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 0.9; transform: scaleY(1.15); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== ORNAMENT ===== */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.ornament .line {
+  height: 1px;
+  background: var(--gold-rich);
+  flex: 0 0 56px;
+  opacity: 0.7;
+}
+.ornament .diamond {
+  font-family: var(--serif-display);
+  color: var(--gold-rich);
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+/* ===== SHARED LAYOUT ===== */
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold-rich);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: var(--serif-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown-deep);
+  margin-bottom: 48px;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== SCREEN READER ONLY ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

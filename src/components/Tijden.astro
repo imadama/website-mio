@@ -1,0 +1,98 @@
+---
+const tijden = [
+  { dag: 'Maandag',   tijd: 'Gesloten', gesloten: true },
+  { dag: 'Dinsdag',   tijd: '16:00 – 22:00' },
+  { dag: 'Woensdag',  tijd: '16:00 – 22:00' },
+  { dag: 'Donderdag', tijd: '16:00 – 22:00' },
+  { dag: 'Vrijdag',   tijd: '12:00 – 22:00' },
+  { dag: 'Zaterdag',  tijd: '12:00 – 22:00' },
+  { dag: 'Zondag',    tijd: '12:00 – 22:00' },
+];
+---
+<section id="tijden" aria-labelledby="tijden-heading">
+  <div class="section-inner narrow">
+    <div class="reveal" style="text-align: center;">
+      <p class="section-label">Wanneer</p>
+      <h2 class="section-title" id="tijden-heading">Openingstijden</h2>
+    </div>
+
+    <ul class="tijden-list reveal" style="transition-delay: 0.1s;" aria-label="Openingstijden MIO Dessert Lounge">
+      {tijden.map(({ dag, tijd, gesloten }) => (
+        <li class:list={['tijden-row', { gesloten }]}>
+          <span class="tijden-dag">{dag}</span>
+          <span class="tijden-dots" aria-hidden="true"></span>
+          <span class="tijden-tijd">{tijd}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  #tijden {
+    padding: 96px 0 100px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 50% 70% at 10% 50%, rgba(232, 212, 168, 0.3) 0%, transparent 60%),
+      var(--cream-base);
+  }
+
+  .narrow { max-width: 680px; }
+
+  .tijden-list { list-style: none; }
+
+  .tijden-row {
+    display: flex;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px dotted rgba(184, 149, 106, 0.45);
+    gap: 12px;
+  }
+  .tijden-row:last-child { border-bottom: none; }
+
+  .tijden-dag {
+    font-family: var(--serif-display);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .tijden-dots {
+    flex: 1;
+    height: 1px;
+    border-bottom: 1px dotted rgba(184, 149, 106, 0.5);
+    margin-bottom: 3px;
+    min-width: 20px;
+  }
+
+  .tijden-tijd {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--brown-text);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .tijden-row.gesloten .tijden-dag {
+    font-family: var(--serif-body);
+    font-size: 15px;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--brown-soft);
+    text-transform: none;
+  }
+  .tijden-row.gesloten .tijden-tijd {
+    color: var(--brown-soft);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .tijden-dag  { min-width: 110px; font-size: 12px; }
+    .tijden-tijd { font-size: 12px; }
+  }
+</style>

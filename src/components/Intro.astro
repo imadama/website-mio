@@ -1,0 +1,103 @@
+---
+---
+<section id="intro" aria-labelledby="intro-heading">
+  <div class="section-inner">
+    <h2 id="intro-heading" class="sr-only">Over MIO</h2>
+
+    <p class="intro-quote reveal">
+      Een plek waar romige gelato, warme koffie en verleidelijke desserts samenkomen.
+      Rustig, warm, en van harte welkom&nbsp;— in onze lounge.
+    </p>
+
+    <div class="intro-icons reveal" style="transition-delay: 0.15s;">
+
+      <div class="intro-icon-block">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+          stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M20 28 L14 16 Q11 10 20 10 Q29 10 26 16 Z"/>
+          <path d="M15.5 16 Q20 13 24.5 16"/>
+          <line x1="20" y1="28" x2="20" y2="34"/>
+          <line x1="17" y1="31" x2="23" y2="31"/>
+        </svg>
+        <span class="intro-icon-label">Gelato</span>
+      </div>
+
+      <div class="intro-icon-block">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+          stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M11 18 H27 L25 30 H13 Z"/>
+          <path d="M27 20 Q33 20 33 24 Q33 28 27 28"/>
+          <line x1="15" y1="30" x2="25" y2="30"/>
+          <line x1="13" y1="32" x2="27" y2="32"/>
+          <path d="M16 15 Q17 12 16 10"/>
+          <path d="M20 15 Q21 12 20 10"/>
+          <path d="M24 15 Q25 12 24 10"/>
+        </svg>
+        <span class="intro-icon-label">Koffie</span>
+      </div>
+
+      <div class="intro-icon-block">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+          stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <polygon points="20,8 23,16 32,16 25,21 28,30 20,25 12,30 15,21 8,16 17,16"/>
+        </svg>
+        <span class="intro-icon-label">Desserts</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #intro {
+    padding: 100px 0 96px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 50%, rgba(232, 212, 168, 0.25) 0%, transparent 60%),
+      var(--cream-base);
+  }
+
+  .intro-quote {
+    font-family: var(--serif-body);
+    font-size: clamp(20px, 2.8vw, 30px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--brown-text);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+
+  .intro-icons {
+    display: flex;
+    justify-content: center;
+    gap: clamp(32px, 6vw, 80px);
+    flex-wrap: wrap;
+  }
+
+  .intro-icon-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: var(--gold-rich);
+  }
+
+  .intro-icon-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+
+  @media (max-width: 640px) {
+    #intro { padding: 72px 0 72px; }
+    .intro-icons { gap: 36px; }
+  }
+</style>

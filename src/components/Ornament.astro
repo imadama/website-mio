@@ -1,0 +1,12 @@
+---
+const { fullWidth = false, padded = false } = Astro.props;
+const lineStyle = fullWidth ? 'flex: 1 1 auto;' : '';
+const wrapStyle = padded ? 'padding: 0 24px;' : '';
+---
+<div aria-hidden="true" style={wrapStyle}>
+  <div class="ornament">
+    <span class="line" style={lineStyle}></span>
+    <span class="diamond">✦</span>
+    <span class="line" style={lineStyle}></span>
+  </div>
+</div>

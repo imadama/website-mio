@@ -1,0 +1,105 @@
+---
+const items = [
+  {
+    naam: 'Gelato',
+    omschrijving: 'Romige gelato, elke dag vers gedraaid — van zacht vanille tot donkere cioccolato.',
+  },
+  {
+    naam: 'Wafels',
+    omschrijving: 'Knapperig van buiten, zacht van binnen — geserveerd warm met toppings naar keuze.',
+  },
+  {
+    naam: 'Koffie',
+    omschrijving: 'Espresso, cappuccino of een fluweelzachte flat white — gezet met aandacht en Italiaanse bonen.',
+  },
+  {
+    naam: 'Thee',
+    omschrijving: 'Een stille kop thee — voor wie even pauze neemt.',
+  },
+  {
+    naam: 'Gebakjes',
+    omschrijving: 'Dagelijks vers — klein van formaat, groot van smaak.',
+  },
+  {
+    naam: 'Shakes',
+    omschrijving: 'Dikke, romige milkshakes op basis van verse gelato — een kinderdroom, opnieuw beleefd.',
+  },
+];
+---
+<section id="aanbod" aria-labelledby="aanbod-heading">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Op de Kaart</p>
+      <h2 class="section-title" id="aanbod-heading">Wat Komt Eraan</h2>
+    </div>
+
+    <div class="aanbod-grid">
+      {items.map((item, i) => (
+        <div class="aanbod-item reveal" style={`transition-delay: ${0.05 * (i + 1)}s`}>
+          <div class="aanbod-naam">{item.naam}</div>
+          <p class="aanbod-omschrijving">{item.omschrijving}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #aanbod {
+    padding: 96px 0 100px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 30%, rgba(201, 168, 118, 0.15) 0%, transparent 60%),
+      var(--cream-base);
+  }
+
+  .aanbod-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .aanbod-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-gold);
+  }
+  .aanbod-item:nth-child(odd)  { padding-right: 40px; }
+  .aanbod-item:nth-child(even) {
+    padding-left: 40px;
+    border-left: 1px solid var(--line-gold);
+  }
+  .aanbod-item:nth-last-child(-n+2) { border-bottom: none; }
+
+  .aanbod-naam {
+    font-family: var(--serif-display);
+    font-size: clamp(15px, 1.8vw, 19px);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    display: inline-block;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(184, 149, 106, 0.4);
+    margin-bottom: 8px;
+  }
+
+  .aanbod-omschrijving {
+    font-family: var(--serif-body);
+    font-size: clamp(15px, 1.5vw, 17px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--brown-soft);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 640px) {
+    .aanbod-grid { grid-template-columns: 1fr; }
+    .aanbod-item:nth-child(odd)  { padding-right: 0; }
+    .aanbod-item:nth-child(even) {
+      padding-left: 0;
+      border-left: none;
+    }
+    .aanbod-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--line-gold); }
+    .aanbod-item:last-child { border-bottom: none; }
+  }
+</style>

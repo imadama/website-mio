@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIO Dessert Lounge — Binnenkort Geopend · Gorinchem</title>
+<meta name="description" content="MIO Dessert Lounge opent binnenkort in Gorinchem. Romige gelato, warme koffie en verleidelijke desserts in een intieme lounge-sfeer.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MIO Dessert Lounge — Binnenkort Geopend · Gorinchem">
+<meta property="og:description" content="Romige gelato, warme koffie en verleidelijke desserts. Binnenkort in Gorinchem.">
+<meta property="og:image" content="https://mio-gorinchem.nl/og-image.jpg">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MIO Dessert Lounge · Gorinchem">
+<meta name="twitter:description" content="Romige gelato, warme koffie en verleidelijke desserts. Binnenkort geopend.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET & ROOT ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream-base:   #EDE0CC;
+  --cream-soft:   #F5ECDB;
+  --champagne:    #C9A876;
+  --gold-rich:    #B8956A;
+  --gold-shimmer: #E8D4A8;
+  --brown-deep:   #3D2817;
+  --brown-text:   #4A3320;
+  --brown-soft:   #5A4128;
+  --line-gold:    rgba(184, 149, 106, 0.35);
+
+  --serif-display: 'Cinzel', serif;
+  --serif-body:    'Cormorant Garamond', Georgia, serif;
+  --sans:          'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--cream-base);
+  color: var(--brown-text);
+  font-family: var(--serif-body);
+  overflow-x: hidden;
+}
+
+/* Paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.55 0 0 0 0 0.35 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 0.9; transform: scaleY(1.15); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== SHARED ORNAMENT ===== */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.ornament .line {
+  height: 1px;
+  background: var(--gold-rich);
+  flex: 0 0 56px;
+  opacity: 0.7;
+}
+.ornament .diamond {
+  font-family: var(--serif-display);
+  color: var(--gold-rich);
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+/* ===== SECTION SHARED ===== */
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold-rich);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: var(--serif-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown-deep);
+  margin-bottom: 48px;
+}
+
+/* ===== HERO ===== */
+#hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 80px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 212, 168, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(201, 168, 118, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 60%, rgba(212, 185, 140, 0.15) 0%, transparent 55%),
+    var(--cream-base);
+}
+
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-rich);
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.hero-logo {
+  font-family: var(--serif-display);
+  font-size: clamp(88px, 18vw, 160px);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  margin: 28px 0 4px;
+  background: linear-gradient(135deg, #D4B98C 0%, #B8956A 25%, #E8D4A8 50%, #B8956A 75%, #8B6F47 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation:
+    fadeUp 1s ease forwards,
+    shimmer 6s ease-in-out infinite;
+  animation-delay: 0.55s, 1.6s;
+  opacity: 0;
+}
+
+.hero-ornament {
+  margin: 16px 0 20px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards;
+  animation-delay: 0.9s;
+}
+.hero-ornament .line { flex: 0 0 72px; }
+
+.hero-tagline {
+  font-family: var(--serif-body);
+  font-size: clamp(16px, 2.4vw, 26px);
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--brown-deep);
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards;
+  animation-delay: 1.1s;
+}
+
+.hero-sub {
+  margin-top: 22px;
+  font-family: var(--serif-body);
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--brown-soft);
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards;
+  animation-delay: 1.3s;
+}
+.hero-sub .bullet {
+  color: var(--gold-rich);
+  margin: 0 10px;
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+
+.hero-badge {
+  margin-top: 44px;
+  display: inline-block;
+  border: 1px solid var(--gold-rich);
+  padding: 10px 32px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-rich);
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards;
+  animation-delay: 1.5s;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(to bottom, transparent, var(--gold-rich));
+  animation: pulse-line 2.4s ease-in-out infinite;
+  opacity: 0;
+  animation: pulse-line 2.4s ease-in-out infinite, fade-in 0.6s ease forwards;
+  animation-delay: 0s, 2s;
+}
+
+/* ===== INTRO ===== */
+#intro {
+  padding: 100px 0 96px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 50%, rgba(232, 212, 168, 0.25) 0%, transparent 60%),
+    var(--cream-base);
+}
+
+.intro-quote {
+  font-family: var(--serif-body);
+  font-size: clamp(20px, 2.8vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--brown-text);
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 64px;
+}
+
+.intro-icons {
+  display: flex;
+  justify-content: center;
+  gap: clamp(32px, 6vw, 80px);
+  flex-wrap: wrap;
+}
+
+.intro-icon-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.intro-icon-block svg {
+  width: 40px;
+  height: 40px;
+  color: var(--gold-rich);
+  flex-shrink: 0;
+}
+
+.intro-icon-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+/* ===== AANBOD ===== */
+#aanbod {
+  padding: 96px 0 100px;
+  background:
+    radial-gradient(ellipse 60% 60% at 80% 30%, rgba(201, 168, 118, 0.15) 0%, transparent 60%),
+    var(--cream-base);
+  position: relative;
+}
+
+.aanbod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.aanbod-item {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line-gold);
+  position: relative;
+}
+.aanbod-item:nth-child(odd) { padding-right: 40px; }
+.aanbod-item:nth-child(even) {
+  padding-left: 40px;
+  border-left: 1px solid var(--line-gold);
+}
+.aanbod-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.aanbod-naam {
+  font-family: var(--serif-display);
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown-deep);
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(184, 149, 106, 0.4);
+  display: inline-block;
+}
+
+.aanbod-omschrijving {
+  font-family: var(--serif-body);
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--brown-soft);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* ===== OPENINGSTIJDEN ===== */
+#tijden {
+  padding: 96px 0 100px;
+  background:
+    radial-gradient(ellipse 50% 70% at 10% 50%, rgba(232, 212, 168, 0.3) 0%, transparent 60%),
+    var(--cream-base);
+  position: relative;
+}
+
+.tijden-list {
+  list-style: none;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.tijden-row {
+  display: flex;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px dotted rgba(184, 149, 106, 0.4);
+  gap: 12px;
+}
+.tijden-row:last-child { border-bottom: none; }
+
+.tijden-dag {
+  font-family: var(--serif-display);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown-deep);
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.tijden-dots {
+  flex: 1;
+  height: 1px;
+  border-bottom: 1px dotted rgba(184, 149, 106, 0.5);
+  margin-bottom: 3px;
+  min-width: 20px;
+}
+
+.tijden-tijd {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--brown-text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tijden-row.gesloten .tijden-dag,
+.tijden-row.gesloten .tijden-tijd {
+  color: var(--brown-soft);
+  font-style: italic;
+}
+.tijden-row.gesloten .tijden-dag {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+/* ===== NOTIFY ===== */
+#notify {
+  padding: 96px 0 100px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201, 168, 118, 0.18) 0%, transparent 65%),
+    var(--cream-base);
+  position: relative;
+}
+
+.notify-intro {
+  font-family: var(--serif-body);
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--brown-text);
+  margin-bottom: 36px;
+  line-height: 1.55;
+}
+
+.notify-form {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 500px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.notify-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 14px 20px;
+  background: var(--cream-soft);
+  border: 1px solid var(--gold-rich);
+  border-radius: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--brown-text);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.notify-input::placeholder { color: var(--brown-soft); opacity: 0.6; }
+.notify-input:focus {
+  border-color: var(--champagne);
+  box-shadow: 0 0 0 2px rgba(184, 149, 106, 0.2);
+}
+
+.notify-btn {
+  padding: 14px 28px;
+  background: var(--gold-rich);
+  border: 1px solid var(--gold-rich);
+  color: var(--cream-soft);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.35s ease, border-color 0.35s ease, letter-spacing 0.35s ease;
+  white-space: nowrap;
+}
+.notify-btn:hover {
+  background: var(--brown-deep);
+  border-color: var(--brown-deep);
+  letter-spacing: 0.42em;
+}
+.notify-btn:focus-visible {
+  outline: 2px solid var(--gold-rich);
+  outline-offset: 3px;
+}
+
+.notify-thanks {
+  display: none;
+  font-family: var(--serif-body);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--gold-rich);
+  margin-top: 16px;
+}
+
+/* ===== SECTION DIVIDERS ===== */
+.section-divider {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px;
+}
+
+/* ===== FOOTER ===== */
+#footer {
+  padding: 72px 24px 56px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(61, 40, 23, 0.06) 0%, transparent 65%),
+    var(--cream-base);
+  position: relative;
+}
+
+.footer-logo {
+  font-family: var(--serif-display);
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  background: linear-gradient(135deg, #D4B98C 0%, #B8956A 35%, #E8D4A8 55%, #B8956A 75%, #8B6F47 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.footer-sub {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+  margin-bottom: 28px;
+}
+
+.footer-contact {
+  margin-bottom: 28px;
+}
+.footer-contact a {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--gold-rich);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.footer-contact a:hover { color: var(--brown-deep); }
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(184, 149, 106, 0.5);
+  color: var(--gold-rich);
+  text-decoration: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.footer-social-link:hover {
+  border-color: var(--gold-rich);
+  color: var(--brown-deep);
+}
+.footer-social-link:focus-visible {
+  outline: 2px solid var(--gold-rich);
+  outline-offset: 3px;
+}
+.footer-social-link svg {
+  width: 17px;
+  height: 17px;
+}
+
+.footer-copy {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+  opacity: 0.7;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 640px) {
+  .aanbod-grid {
+    grid-template-columns: 1fr;
+  }
+  .aanbod-item:nth-child(odd) { padding-right: 0; }
+  .aanbod-item:nth-child(even) {
+    padding-left: 0;
+    border-left: none;
+  }
+  .aanbod-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--line-gold); }
+  .aanbod-item:last-child { border-bottom: none; }
+
+  .tijden-dag { min-width: 110px; font-size: 12px; }
+  .tijden-tijd { font-size: 12px; }
+
+  .notify-form { flex-direction: column; }
+  .notify-input, .notify-btn { width: 100%; }
+
+  .intro-icons { gap: 36px; }
+
+  #hero { padding: 80px 24px 100px; }
+  .hero-ornament .line { flex: 0 0 48px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section id="hero" aria-label="Openingspagina MIO Dessert Lounge">
+  <p class="hero-eyebrow">Gorinchem &nbsp;·&nbsp; Binnenkort Geopend</p>
+
+  <h1 class="hero-logo" aria-label="MIO">MIO</h1>
+
+  <div class="hero-ornament ornament" aria-hidden="true">
+    <span class="line"></span>
+    <span class="diamond">✦</span>
+    <span class="line"></span>
+  </div>
+
+  <p class="hero-tagline">Dessert Lounge</p>
+
+  <p class="hero-sub">
+    Coffee
+    <span class="bullet" aria-hidden="true">✦</span>
+    Gelato
+    <span class="bullet" aria-hidden="true">✦</span>
+    Desserts
+  </p>
+
+  <div class="hero-badge" role="status">Coming Soon</div>
+
+  <div class="scroll-indicator" aria-hidden="true" title="Scroll naar beneden"></div>
+</section>
+
+
+<!-- DIVIDER -->
+<div class="section-divider" aria-hidden="true">
+  <div class="ornament" style="padding: 0;">
+    <span class="line" style="flex: 1 1 auto;"></span>
+    <span class="diamond">✦</span>
+    <span class="line" style="flex: 1 1 auto;"></span>
+  </div>
+</div>
+
+
+<!-- ===== INTRO ===== -->
+<section id="intro" aria-labelledby="intro-heading">
+  <div class="section-inner">
+    <p class="intro-quote reveal">
+      Een plek waar romige gelato, warme koffie en zijdezachte verleidingen samenkomen.
+      Rustig, warm, en van harte welkom&nbsp;— in onze lounge.
+    </p>
+
+    <div class="intro-icons reveal" style="transition-delay: 0.15s;">
+      <!-- Gelato -->
+      <div class="intro-icon-block">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 28 L14 16 Q11 10 20 10 Q29 10 26 16 Z"/>
+          <path d="M15.5 16 Q20 13 24.5 16"/>
+          <line x1="20" y1="28" x2="20" y2="34"/>
+          <line x1="17" y1="31" x2="23" y2="31"/>
+        </svg>
+        <span class="intro-icon-label">Gelato</span>
+      </div>
+
+      <!-- Koffie -->
+      <div class="intro-icon-block">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 18 H27 L25 30 H13 Z"/>
+          <path d="M27 20 Q33 20 33 24 Q33 28 27 28"/>
+          <line x1="15" y1="30" x2="25" y2="30"/>
+          <line x1="13" y1="32" x2="27" y2="32"/>
+          <path d="M16 15 Q17 12 16 10"/>
+          <path d="M20 15 Q21 12 20 10"/>
+          <path d="M24 15 Q25 12 24 10"/>
+        </svg>
+        <span class="intro-icon-label">Koffie</span>
+      </div>
+
+      <!-- Desserts -->
+      <div class="intro-icon-block">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="20,8 23,16 32,16 25,21 28,30 20,25 12,30 15,21 8,16 17,16"/>
+        </svg>
+        <span class="intro-icon-label">Desserts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIVIDER -->
+<div class="section-divider" aria-hidden="true">
+  <div class="ornament">
+    <span class="line" style="flex: 1 1 auto;"></span>
+    <span class="diamond">✦</span>
+    <span class="line" style="flex: 1 1 auto;"></span>
+  </div>
+</div>
+
+
+<!-- ===== AANBOD ===== -->
+<section id="aanbod" aria-labelledby="aanbod-heading">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Op de Kaart</p>
+      <h2 class="section-title" id="aanbod-heading">Wat Komt Eraan</h2>
+    </div>
+
+    <div class="aanbod-grid">
+
+      <div class="aanbod-item reveal" style="transition-delay:0.05s">
+        <div class="aanbod-naam">Gelato</div>
+        <p class="aanbod-omschrijving">Romige Italiaanse gelato, elke dag vers gedraaid — van zacht vanille tot donkere cioccolato.</p>
+      </div>
+
+      <div class="aanbod-item reveal" style="transition-delay:0.10s">
+        <div class="aanbod-naam">Wafels</div>
+        <p class="aanbod-omschrijving">Knapperig van buiten, zacht van binnen — geserveerd warm met toppings naar keuze.</p>
+      </div>
+
+      <div class="aanbod-item reveal" style="transition-delay:0.15s">
+        <div class="aanbod-naam">Koffie</div>
+        <p class="aanbod-omschrijving">Espresso, cappuccino of een fluweelzachte flat white — gezet met aandacht en Italiaanse bonen.</p>
+      </div>
+
+      <div class="aanbod-item reveal" style="transition-delay:0.20s">
+        <div class="aanbod-naam">Thee</div>
+        <p class="aanbod-omschrijving">Handgeplukte losse bladthee in sierlijke potten — warm, geurig en rustgevend.</p>
+      </div>
+
+      <div class="aanbod-item reveal" style="transition-delay:0.25s">
+        <div class="aanbod-naam">Gebakjes</div>
+        <p class="aanbod-omschrijving">Huisgemaakte patisserie: van delicate petit fours tot verleidelijke taartpunten op het bord.</p>
+      </div>
+
+      <div class="aanbod-item reveal" style="transition-delay:0.30s">
+        <div class="aanbod-naam">Shakes</div>
+        <p class="aanbod-omschrijving">Dikke, romige milkshakes op basis van verse gelato — een kinderdroom, opnieuw beleefd.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- DIVIDER -->
+<div class="section-divider" aria-hidden="true">
+  <div class="ornament">
+    <span class="line" style="flex: 1 1 auto;"></span>
+    <span class="diamond">✦</span>
+    <span class="line" style="flex: 1 1 auto;"></span>
+  </div>
+</div>
+
+
+<!-- ===== OPENINGSTIJDEN ===== -->
+<section id="tijden" aria-labelledby="tijden-heading">
+  <div class="section-inner" style="max-width: 680px;">
+    <div class="reveal" style="text-align: center;">
+      <p class="section-label">Wanneer</p>
+      <h2 class="section-title" id="tijden-heading">Openingstijden</h2>
+    </div>
+
+    <ul class="tijden-list reveal" style="transition-delay: 0.1s;" aria-label="Openingstijden MIO Dessert Lounge">
+
+      <li class="tijden-row gesloten">
+        <span class="tijden-dag">Maandag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">Gesloten</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Dinsdag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">16:00 – 22:00</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Woensdag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">16:00 – 22:00</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Donderdag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">16:00 – 22:00</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Vrijdag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">12:00 – 22:00</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Zaterdag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">12:00 – 22:00</span>
+      </li>
+
+      <li class="tijden-row">
+        <span class="tijden-dag">Zondag</span>
+        <span class="tijden-dots" aria-hidden="true"></span>
+        <span class="tijden-tijd">12:00 – 22:00</span>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+
+<!-- DIVIDER -->
+<div class="section-divider" aria-hidden="true">
+  <div class="ornament">
+    <span class="line" style="flex: 1 1 auto;"></span>
+    <span class="diamond">✦</span>
+    <span class="line" style="flex: 1 1 auto;"></span>
+  </div>
+</div>
+
+
+<!-- ===== NOTIFY ===== -->
+<section id="notify" aria-labelledby="notify-heading">
+  <div class="section-inner" style="max-width: 640px;">
+    <div class="reveal">
+      <p class="section-label">Op de Hoogte</p>
+      <h2 class="section-title" id="notify-heading" style="text-align:center;">Wees de Eerste</h2>
+    </div>
+
+    <p class="notify-intro reveal" style="transition-delay:0.1s; text-align:center;">
+      Wees de eerste die het weet wanneer we opengaan.
+    </p>
+
+    <div class="reveal" style="transition-delay:0.2s;">
+      <form class="notify-form" id="notifyForm" novalidate aria-label="Aanmeldformulier nieuwsbrief">
+        <label for="notifyEmail" class="sr-only">E-mailadres</label>
+        <input
+          type="email"
+          id="notifyEmail"
+          class="notify-input"
+          placeholder="uw e-mailadres"
+          autocomplete="email"
+          required
+          aria-required="true"
+        >
+        <button type="submit" class="notify-btn">Houd mij op de hoogte</button>
+      </form>
+      <p class="notify-thanks" id="notifyThanks" role="status" aria-live="polite">
+        Dank je — we laten je het weten.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="ornament" aria-hidden="true" style="margin-bottom: 40px;">
+    <span class="line" style="flex: 1 1 auto;"></span>
+    <span class="diamond">✦</span>
+    <span class="line" style="flex: 1 1 auto;"></span>
+  </div>
+
+  <div class="footer-logo" aria-label="MIO">MIO</div>
+  <p class="footer-sub">Dessert Lounge &nbsp;·&nbsp; Gorinchem</p>
+
+  <div class="footer-contact">
+    <a href="mailto:info@mio-gorinchem.nl" aria-label="Stuur een e-mail naar MIO Dessert Lounge">info@mio-gorinchem.nl</a>
+  </div>
+
+  <div class="footer-socials" aria-label="Sociale media">
+    <a href="#" class="footer-social-link" aria-label="MIO op Instagram" rel="noopener">
+      <!-- Instagram icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="#" class="footer-social-link" aria-label="MIO op TikTok" rel="noopener">
+      <!-- TikTok icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+      </svg>
+    </a>
+  </div>
+
+  <p class="footer-copy">© 2026 Mio Dessert Lounge</p>
+</footer>
+
+<!-- sr-only utility -->
+<style>
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+</style>
+
+<script>
+/* ===== SCROLL REVEAL ===== */
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+})();
+
+/* ===== NOTIFY FORM ===== */
+document.getElementById('notifyForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var input = document.getElementById('notifyEmail');
+  if (!input.value || !input.validity.valid) {
+    input.focus();
+    return;
+  }
+  this.style.display = 'none';
+  var thanks = document.getElementById('notifyThanks');
+  thanks.style.display = 'block';
+});
+</script>
+
+</body>
+</html>
