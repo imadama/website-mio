@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
+import { openingHoursSpecification, samenvatting } from '../lib/openingstijden.js';
+import { socialUrls } from '../lib/socials.js';
 
 const {
-  title = 'MIO Coffee & Desserts — Binnenkort Geopend · Gorinchem',
-  description = 'MIO Coffee & Desserts opent binnenkort in Gorinchem. Romige gelato, warme koffie en verleidelijke desserts.',
+  title = 'MIO Coffee & Desserts — Gelato, Koffie & Desserts in Gorinchem',
+  description = `MIO Coffee & Desserts in Gorinchem: romige gelato, warme koffie en verleidelijke desserts. Open ${samenvatting()}.`,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://mio-gorinchem.nl');
@@ -14,7 +16,7 @@ const schema = {
   name: 'MIO Coffee & Desserts',
   description: 'Romige gelato, warme koffie en verleidelijke desserts in Gorinchem.',
   url: 'https://mio-gorinchem.nl',
-  telephone: null,
+  telephone: '+31183794183',
   email: 'info@mio-gorinchem.nl',
   address: {
     '@type': 'PostalAddress',
@@ -23,14 +25,11 @@ const schema = {
     addressLocality: 'Gorinchem',
     addressCountry: 'NL',
   },
-  openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday','Wednesday','Thursday'], opens: '16:00', closes: '22:00' },
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday','Saturday','Sunday'], opens: '12:00', closes: '22:00' },
-  ],
+  openingHoursSpecification: openingHoursSpecification(),
   servesCuisine: ['Gelato', 'Koffie', 'Desserts'],
   priceRange: '€€',
   image: 'https://mio-gorinchem.nl/og-image.jpg',
-  sameAs: [],
+  sameAs: socialUrls,
 };
 ---
 <!doctype html>

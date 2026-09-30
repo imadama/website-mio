@@ -1,0 +1,87 @@
+---
+/**
+ * Live "Nu open / Gesloten"-badge.
+ *
+ * Server-side gerenderd voor de eerste weergave; daarna neemt het script
+ * hieronder het over en ververst elke minuut. Het script werkt álle badges
+ * op de pagina bij ([data-open-status]) én de vandaag-markering in de
+ * tijdenlijst ([data-day]). Astro laadt het script één keer, ook als het
+ * component meerdere keren op de pagina staat.
+ */
+import { currentStatus } from '../lib/openingstijden.js';
+
+const status = currentStatus();
+---
+<p class="open-status" data-open-status data-open={String(status.open)} role="status" aria-live="polite">
+  <span class="open-status-dot" aria-hidden="true"></span>
+  <span data-open-status-text>{status.text}</span>
+</p>
+
+<script>
+  import { currentStatus } from '../lib/openingstijden.js';
+
+  function update() {
+    const status = currentStatus();
+
+    document.querySelectorAll<HTMLElement>('[data-open-status]').forEach((el) => {
+      el.dataset.open = String(status.open);
+      const text = el.querySelector('[data-open-status-text]');
+      if (text && text.textContent !== status.text) text.textContent = status.text;
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-day]').forEach((el) => {
+      el.classList.toggle('vandaag', Number(el.dataset.day) === status.day);
+    });
+  }
+
+  update();
+  setInterval(update, 60 * 1000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) update();
+  });
+</script>
+
+<style>
+  .open-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 24px;
+    border: 1px solid var(--gold-rich);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    white-space: nowrap;
+  }
+
+  .open-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--brown-soft);
+    opacity: 0.45;
+  }
+
+  .open-status[data-open="true"] {
+    border-color: var(--champagne);
+  }
+  .open-status[data-open="true"] .open-status-dot {
+    background: #6E8B5B;
+    opacity: 1;
+    animation: status-pulse 2.4s ease-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(110, 139, 91, 0.45); }
+    70%  { box-shadow: 0 0 0 7px rgba(110, 139, 91, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(110, 139, 91, 0); }
+  }
+
+  @media (max-width: 640px) {
+    .open-status { letter-spacing: 0.22em; padding: 10px 18px; }
+  }
+</style>

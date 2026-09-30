@@ -1,7 +1,8 @@
 ---
+import OpenStatus from './OpenStatus.astro';
 ---
-<section id="hero" aria-label="Openingspagina MIO Coffee & Desserts">
-  <p class="hero-eyebrow">Gorinchem &nbsp;·&nbsp; Binnenkort Geopend</p>
+<section id="hero" aria-label="Welkom bij MIO Coffee & Desserts">
+  <p class="hero-eyebrow">Gorinchem<span class="hero-eyebrow-adres"> &nbsp;·&nbsp; Kon. Wilhelminalaan 42</span></p>
 
   <h1 class="hero-logo" aria-label="MIO">MIO</h1>
 
@@ -21,7 +22,9 @@
     Desserts
   </p>
 
-  <div class="hero-badge" role="status">Coming Soon</div>
+  <div class="hero-status">
+    <OpenStatus />
+  </div>
 
   <div class="scroll-indicator" aria-hidden="true"></div>
 </section>
@@ -107,17 +110,8 @@
     vertical-align: middle;
   }
 
-  .hero-badge {
+  .hero-status {
     margin-top: 44px;
-    display: inline-block;
-    border: 1px solid var(--gold-rich);
-    padding: 10px 32px;
-    font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.5em;
-    text-transform: uppercase;
-    color: var(--gold-rich);
     opacity: 0;
     animation: fadeUp 0.9s ease forwards 1.5s;
   }
@@ -138,5 +132,6 @@
 
   @media (max-width: 640px) {
     #hero { padding: 80px 24px 100px; }
+    .hero-eyebrow-adres { display: none; }
   }
 </style>

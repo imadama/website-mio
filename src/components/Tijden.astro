@@ -1,25 +1,27 @@
 ---
-const tijden = [
-  { dag: 'Maandag',   tijd: 'Gesloten', gesloten: true },
-  { dag: 'Dinsdag',   tijd: '16:00 – 22:00' },
-  { dag: 'Woensdag',  tijd: '16:00 – 22:00' },
-  { dag: 'Donderdag', tijd: '16:00 – 22:00' },
-  { dag: 'Vrijdag',   tijd: '12:00 – 22:00' },
-  { dag: 'Zaterdag',  tijd: '12:00 – 22:00' },
-  { dag: 'Zondag',    tijd: '12:00 – 22:00' },
-];
+import { tijden, currentStatus } from '../lib/openingstijden.js';
+import OpenStatus from './OpenStatus.astro';
+
+// Vandaag-markering server-side; OpenStatus houdt 'm daarna in de browser bij.
+const { day: vandaag } = currentStatus();
 ---
 <section id="tijden" aria-labelledby="tijden-heading">
   <div class="section-inner narrow">
     <div class="reveal" style="text-align: center;">
       <p class="section-label">Wanneer</p>
       <h2 class="section-title" id="tijden-heading">Openingstijden</h2>
+      <div class="tijden-status">
+        <OpenStatus />
+      </div>
     </div>
 
     <ul class="tijden-list reveal" style="transition-delay: 0.1s;" aria-label="Openingstijden MIO Coffee & Desserts">
-      {tijden.map(({ dag, tijd, gesloten }) => (
-        <li class:list={['tijden-row', { gesloten }]}>
-          <span class="tijden-dag">{dag}</span>
+      {tijden.map(({ day, dag, tijd, gesloten }) => (
+        <li class:list={['tijden-row', { gesloten, vandaag: day === vandaag }]} data-day={day}>
+          <span class="tijden-dag">
+            {dag}
+            <span class="tijden-vandaag">vandaag</span>
+          </span>
           <span class="tijden-dots" aria-hidden="true"></span>
           <span class="tijden-tijd">{tijd}</span>
         </li>
@@ -38,6 +40,9 @@ const tijden = [
   }
 
   .narrow { max-width: 680px; }
+
+  #tijden .section-title { margin-bottom: 28px; }
+  .tijden-status { margin-bottom: 44px; }
 
   .tijden-list { list-style: none; }
 
@@ -89,6 +94,26 @@ const tijden = [
   .tijden-row.gesloten .tijden-tijd {
     color: var(--brown-soft);
     font-style: italic;
+  }
+
+  /* ----- Vandaag ----- */
+  .tijden-vandaag {
+    display: none;
+    margin-left: 10px;
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-rich);
+    vertical-align: 1px;
+  }
+  .tijden-row.vandaag .tijden-vandaag { display: inline; }
+  .tijden-row.vandaag .tijden-dag,
+  .tijden-row.vandaag .tijden-tijd {
+    color: var(--brown-deep);
+    font-weight: 500;
   }
 
   @media (max-width: 640px) {

@@ -1,6 +1,6 @@
-# MIO Dessert Lounge — Website
+# MIO Coffee & Desserts — Website
 
-Coming soon landingspagina voor MIO Dessert Lounge, Gorinchem (NL).
+Onepager voor MIO Coffee & Desserts, Gorinchem (NL). De zaak is open (sinds september 2026); de site toont het aanbod, openingstijden met live open/gesloten-status en een nieuwsbrief-aanmelding.
 
 ## Tech stack
 
@@ -22,19 +22,36 @@ npm run preview  # preview van de build
 src/
   layouts/Layout.astro          # HTML-shell, meta-tags, Google Fonts, scroll-reveal script
   components/
-    Hero.astro                  # Full-viewport hero met fade-in animaties en shimmer logo
+    Hero.astro                  # Full-viewport hero met fade-in animaties, shimmer logo en live OpenStatus-badge
     Intro.astro                 # Quote + SVG iconen (gelato, koffie, desserts)
     Aanbod.astro                # Kaart grid — items als array in frontmatter
-    Tijden.astro                # Openingstijden — data als array in frontmatter
-    Notify.astro                # E-mailformulier, POST naar /api/subscribe
+    Tijden.astro                # Openingstijden-lijst met vandaag-markering + OpenStatus-badge
+    OpenStatus.astro            # Live "Nu open · tot 22:00" / "Gesloten · morgen vanaf 16:00"-badge + verversscript
+    Notify.astro                # Nieuwsbrief-formulier (voorheen coming-soon notificatie), POST naar /api/subscribe
     Footer.astro                # Logo, adres, email, socials, copyright
     Ornament.astro              # Herbruikbare goud-ornament (props: fullWidth, padded)
+  lib/
+    openingstijden.js           # Enige bron voor openingstijden: lijst, schema.org spec, currentStatus()
+    socials.js                  # Instagram/TikTok-URL's en handle — footer + `sameAs` in de schema
   pages/
     index.astro                 # Assembleert alle componenten
     api/subscribe.js            # POST endpoint — slaat e-mail op in data/subscribers.csv
   styles/
     global.css                  # Design tokens, reset, animaties, gedeelde utilities
 ```
+
+## Openingstijden
+
+Maandag gesloten, dinsdag t/m zondag 16:00 – 22:00.
+
+Tijden wijzig je **alleen** in `src/lib/openingstijden.js` (`hours`, per weekdag in minuten, `null` = gesloten).
+Daaruit volgen automatisch de lijst in `Tijden.astro`, de `openingHoursSpecification` in de LocalBusiness-schema (`Layout.astro`)
+de live status "Nu open · tot 22:00" / "Gesloten · morgen vanaf 16:00" (`OpenStatus.astro`, in hero én tijden-sectie)
+en de samenvatting in de meta-omschrijving.
+
+De status wordt server-side gerenderd en daarna in de browser elke minuut ververst. De tijd wordt berekend in
+`Europe/Amsterdam` via `Intl`, dus onafhankelijk van de tijdzone van de server (Docker/UTC) of de bezoeker.
+Geen feestdagen of afwijkende tijden.
 
 ## Huisstijl
 
@@ -57,7 +74,9 @@ De `data/` map staat in `.gitignore`.
 
 **Bij deployment op Coolify:** mount `data/` als persistent volume zodat inschrijvingen bewaard blijven bij een redeploy.
 
-## Adres
+## Adres & contact
 
 Kon. Wilhelminalaan 42, 4205 EX Gorinchem  
-info@mio-gorinchem.nl
+0183 79 41 83 (`tel:+31183794183`)  
+info@mio-gorinchem.nl  
+Instagram: https://www.instagram.com/mio.gorinchem · TikTok: https://www.tiktok.com/@mio.gorinchem (handle `@mio.gorinchem`, in `src/lib/socials.js`)
