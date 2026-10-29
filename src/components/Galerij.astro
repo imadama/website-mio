@@ -1,0 +1,101 @@
+---
+/**
+ * Fotogalerij — "Binnenkijken".
+ *
+ * Leest automatisch alle foto's uit src/assets/foto/ (alfabetisch op bestandsnaam)
+ * en toont er maximaal zes. Astro maakt er responsive WebP-varianten van en laadt
+ * ze lazy. Geen foto's in de map? Dan wordt de sectie (inclusief ornament) niet
+ * gerenderd. Alt-teksten per bestand staan hieronder; ontbreekt er een, dan
+ * krijgt de foto een algemene beschrijving.
+ */
+import { Image } from 'astro:assets';
+import Ornament from './Ornament.astro';
+
+const MAX = 6;
+
+const altTeksten = {
+  // 'bestandsnaam.jpg': 'Beschrijving van de foto',
+};
+
+const modules = import.meta.glob('../assets/foto/*.{jpg,jpeg,png,webp}', { eager: true });
+
+const fotos = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .slice(0, MAX)
+  .map(([pad, mod]) => {
+    const bestand = pad.split('/').pop();
+    return {
+      src: mod.default,
+      alt: altTeksten[bestand] ?? 'MIO Coffee & Desserts in Gorinchem',
+    };
+  });
+---
+{fotos.length > 0 && (
+  <>
+    <Ornament fullWidth padded />
+    <section id="galerij" aria-labelledby="galerij-heading">
+      <div class="section-inner">
+        <div class="reveal" style="text-align: center;">
+          <p class="section-label">Sfeer</p>
+          <h2 class="section-title" id="galerij-heading">Binnenkijken</h2>
+        </div>
+
+        <div class="galerij-grid">
+          {fotos.map((foto, i) => (
+            <figure class="galerij-item reveal" style={`transition-delay: ${0.08 * (i + 1)}s`}>
+              <Image
+                src={foto.src}
+                alt={foto.alt}
+                widths={[480, 800, 1200]}
+                sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 300px"
+                format="webp"
+                quality={82}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+)}
+
+<style>
+  #galerij {
+    padding: 96px 0 100px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 20%, rgba(232, 212, 168, 0.28) 0%, transparent 60%),
+      var(--cream-base);
+  }
+
+  .galerij-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  /* Passe-partout: dunne gouden rand met een crème marge rond de foto */
+  .galerij-item {
+    margin: 0;
+    padding: 10px;
+    background: var(--cream-soft);
+    border: 1px solid var(--line-gold);
+  }
+
+  .galerij-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: saturate(0.95);
+  }
+
+  @media (max-width: 640px) {
+    #galerij { padding: 72px 0 72px; }
+    .galerij-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .galerij-item { padding: 6px; }
+  }
+</style>

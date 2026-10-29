@@ -1,0 +1,345 @@
+---
+import Layout from '../layouts/Layout.astro';
+import OpenStatus from '../components/OpenStatus.astro';
+import Ornament from '../components/Ornament.astro';
+import Footer from '../components/Footer.astro';
+import { kaarten, menuSchema } from '../lib/menu.js';
+
+const schema = menuSchema('https://mio-gorinchem.nl/menu');
+---
+<Layout
+  title="Menu — MIO Coffee & Desserts · Gorinchem"
+  description="De kaart van MIO in Gorinchem: koffie, matcha, bubble tea en mocktails, versgebakken broodjes en zoete verleidingen als macarons, wafels en skillet cookies."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)} />
+
+  <main id="menu">
+    <section class="menu-kop" aria-labelledby="menu-heading">
+      <div class="section-inner">
+        <a href="/" class="menu-home">
+          <span aria-hidden="true">←</span> MIO
+          <span class="sr-only">terug naar de homepage</span>
+        </a>
+        <p class="section-label">Menu</p>
+        <h1 class="section-title" id="menu-heading">De Kaart</h1>
+        <p class="menu-intro">
+          Koffie, matcha en bubble tea, versgebakken broodjes en zoete verleidingen&nbsp;— vers bereid, met aandacht.
+        </p>
+        <div class="menu-status">
+          <OpenStatus />
+        </div>
+      </div>
+    </section>
+
+    <nav class="menu-nav" aria-label="Kaarten">
+      {kaarten.map((kaart) => (
+        <a href={`#${kaart.id}`}>{kaart.label}</a>
+      ))}
+    </nav>
+
+    {kaarten.map((kaart) => (
+      <>
+        <Ornament fullWidth padded />
+        <section id={kaart.id} class="menu-kaart" aria-labelledby={`${kaart.id}-heading`}>
+          <div class="section-inner">
+            <div class="menu-kaart-kop reveal">
+              <p class="section-label">{kaart.label}</p>
+              <h2 class="section-title" id={`${kaart.id}-heading`}>{kaart.titel}</h2>
+              <p class="menu-kaart-intro">{kaart.intro}</p>
+            </div>
+
+            <div class="menu-groepen">
+              {kaart.groepen.map((groep) => (
+                <div class="menu-groep reveal">
+                  <h3 class="menu-groep-naam">{groep.naam}</h3>
+                  {groep.sub && <p class="menu-groep-sub">{groep.sub}</p>}
+                  {groep.kolommen && (
+                    <p class="menu-kolommen" aria-hidden="true">
+                      {groep.kolommen.map((kolom) => <span class="menu-prijs-kolom">{kolom}</span>)}
+                    </p>
+                  )}
+                  <ul class="menu-items">
+                    {groep.items.map((item) => (
+                      <li class="menu-item">
+                        <div class="menu-item-regel">
+                          <span class="menu-item-naam">
+                            {item.nummer && <span class="menu-item-nr">{item.nummer}</span>}
+                            {item.naam}
+                          </span>
+                          <span class="menu-dots" aria-hidden="true"></span>
+                          <span class="menu-item-prijs">
+                            {item.prijzen
+                              ? item.prijzen.map((p, j) => (
+                                  <span class="menu-prijs-kolom">
+                                    <span class="sr-only">{groep.kolommen[j]}: </span>€ {p}
+                                  </span>
+                                ))
+                              : <>€ {item.prijs}</>}
+                          </span>
+                        </div>
+                        {item.omschrijving && <p class="menu-item-omschrijving">{item.omschrijving}</p>}
+                      </li>
+                    ))}
+                  </ul>
+                  {groep.noot && <p class="menu-groep-noot">{groep.noot}</p>}
+                </div>
+              ))}
+            </div>
+
+            <div class="menu-kaart-voet reveal">
+              {kaart.voetnoot && <p class="menu-voetnoot">{kaart.voetnoot}</p>}
+              <p class="menu-voetnoot">Alle prijzen inclusief btw.</p>
+              <a class="menu-pdf" href={kaart.pdf} download>Download deze kaart als PDF</a>
+            </div>
+          </div>
+        </section>
+      </>
+    ))}
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ----- Kop ----- */
+  .menu-kop {
+    padding: 56px 0 44px;
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 212, 168, 0.5) 0%, transparent 65%),
+      var(--cream-base);
+  }
+
+  .menu-home {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-family: var(--serif-display);
+    font-size: 15px;
+    letter-spacing: 0.3em;
+    color: var(--gold-rich);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .menu-home:hover { color: var(--brown-deep); }
+
+  #menu .section-title { margin-bottom: 16px; }
+
+  .menu-intro {
+    font-family: var(--serif-body);
+    font-size: clamp(17px, 2.2vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--brown-text);
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+
+  /* ----- Sticky navigatie ----- */
+  .menu-nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(237, 224, 204, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line-gold);
+    border-bottom: 1px solid var(--line-gold);
+  }
+  .menu-nav a {
+    padding: 9px 18px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .menu-nav a:hover { color: var(--gold-rich); border-color: var(--gold-rich); }
+  .menu-nav a:focus-visible { outline: 2px solid var(--gold-rich); outline-offset: 2px; }
+
+  /* ----- Kaart ----- */
+  .menu-kaart {
+    padding: 72px 0 64px;
+    scroll-margin-top: 56px;
+    position: relative;
+    background: var(--cream-base);
+  }
+  .menu-kaart:nth-of-type(even) {
+    background:
+      radial-gradient(ellipse 60% 60% at 85% 30%, rgba(201, 168, 118, 0.15) 0%, transparent 60%),
+      var(--cream-base);
+  }
+
+  .menu-kaart-kop { text-align: center; }
+
+  .menu-kaart-intro {
+    font-family: var(--serif-body);
+    font-size: clamp(15px, 1.8vw, 19px);
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    color: var(--brown-soft);
+    margin-bottom: 56px;
+  }
+
+  .menu-groepen {
+    columns: 2;
+    column-gap: 64px;
+  }
+
+  .menu-groep {
+    break-inside: avoid;
+    margin-bottom: 44px;
+  }
+
+  .menu-groep-naam {
+    font-family: var(--serif-display);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-gold);
+    margin-bottom: 8px;
+  }
+
+  .menu-groep-sub {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-rich);
+    margin: 10px 0 2px;
+  }
+
+  .menu-kolommen {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+
+  .menu-items { list-style: none; }
+
+  .menu-item { padding: 9px 0; }
+
+  .menu-item-regel {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .menu-item-naam {
+    font-family: var(--serif-body);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--brown-deep);
+  }
+
+  .menu-item-nr {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold-rich);
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+
+  .menu-dots {
+    flex: 1;
+    min-width: 16px;
+    border-bottom: 1px dotted rgba(184, 149, 106, 0.5);
+    margin-bottom: 4px;
+  }
+
+  .menu-item-prijs {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--brown-text);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .menu-prijs-kolom {
+    display: inline-block;
+    min-width: 68px;
+    text-align: right;
+  }
+
+  .menu-item-omschrijving {
+    font-family: var(--serif-body);
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--brown-soft);
+    margin-top: 2px;
+    padding-right: 64px;
+  }
+
+  .menu-groep-noot {
+    font-family: var(--serif-body);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--brown-soft);
+    margin-top: 10px;
+  }
+
+  .menu-kaart-voet {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .menu-voetnoot {
+    font-family: var(--serif-body);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--brown-soft);
+    line-height: 1.6;
+  }
+
+  .menu-pdf {
+    display: inline-block;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-rich);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-gold);
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .menu-pdf:hover { color: var(--brown-deep); border-color: var(--brown-deep); }
+
+  @media (max-width: 760px) {
+    .menu-groepen { columns: 1; }
+    .menu-item-omschrijving { padding-right: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .menu-kop { padding: 40px 0 36px; }
+    .menu-kaart { padding: 56px 0 48px; }
+    .menu-nav { gap: 0; padding: 8px 8px; }
+    .menu-nav a { padding: 9px 12px; letter-spacing: 0.25em; }
+    .menu-item-naam { font-size: 17px; }
+  }
+</style>

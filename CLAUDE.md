@@ -22,22 +22,29 @@ npm run preview  # preview van de build
 src/
   layouts/Layout.astro          # HTML-shell, meta-tags, Google Fonts, scroll-reveal script
   components/
-    Hero.astro                  # Full-viewport hero met fade-in animaties, shimmer logo en live OpenStatus-badge
+    Hero.astro                  # Full-viewport hero met fade-in animaties, shimmer logo, live OpenStatus-badge en Menu-knop
     Intro.astro                 # Quote + SVG iconen (gelato, koffie, desserts)
-    Aanbod.astro                # Kaart grid — items als array in frontmatter
+    Galerij.astro               # Fotogalerij "Binnenkijken" — leest src/assets/foto/, max 6, astro:assets (WebP, lazy)
+    Aanbod.astro                # Kaart grid — items als array in frontmatter, link naar /menu
     Tijden.astro                # Openingstijden-lijst met vandaag-markering + OpenStatus-badge
     OpenStatus.astro            # Live "Nu open · tot 22:00" / "Gesloten · morgen vanaf 16:00"-badge + verversscript
     Notify.astro                # Nieuwsbrief-formulier (voorheen coming-soon notificatie), POST naar /api/subscribe
     Footer.astro                # Logo, adres, email, socials, copyright
     Ornament.astro              # Herbruikbare goud-ornament (props: fullWidth, padded)
+  assets/
+    foto/                       # Foto's voor de galerij (jpg/png/webp, alfabetisch, max 2000px aanleveren)
   lib/
     openingstijden.js           # Enige bron voor openingstijden: lijst, schema.org spec, currentStatus()
     socials.js                  # Instagram/TikTok-URL's en handle — footer + `sameAs` in de schema
+    menu.js                     # Menukaart (dranken, broodjes, zoet) — bron voor /menu en de Menu-schema
   pages/
     index.astro                 # Assembleert alle componenten
+    menu.astro                  # Menupagina /menu: drie kaarten, sticky navigatie, PDF-downloads, Menu JSON-LD
     api/subscribe.js            # POST endpoint — slaat e-mail op in data/subscribers.csv
   styles/
     global.css                  # Design tokens, reset, animaties, gedeelde utilities
+public/
+  menu/*.pdf                    # Originele menukaarten (download-links op /menu)
 ```
 
 ## Openingstijden
@@ -52,6 +59,22 @@ en de samenvatting in de meta-omschrijving.
 De status wordt server-side gerenderd en daarna in de browser elke minuut ververst. De tijd wordt berekend in
 `Europe/Amsterdam` via `Intl`, dus onafhankelijk van de tijdzone van de server (Docker/UTC) of de bezoeker.
 Geen feestdagen of afwijkende tijden.
+
+## Foto's
+
+Foto's voor de galerij zet je in `src/assets/foto/` (jpg, png of webp). `Galerij.astro` pakt ze automatisch op,
+alfabetisch op bestandsnaam, maximaal zes. Astro genereert responsive WebP-varianten (480/800/1200 px) en laadt lazy.
+HEIC eerst omzetten (`sips -s format jpeg foto.HEIC --out foto.jpg`) en verkleinen tot max. 2000 px op de lange zijde.
+Alt-teksten per bestand in `altTeksten` in `Galerij.astro`. Geen foto's in de map = geen sectie.
+
+## Menu
+
+De kaart staat op `/menu` en wordt gerenderd uit `src/lib/menu.js`: drie kaarten (dranken, broodjes, zoet) met groepen
+en items. Prijzen als string met komma; een item heeft `prijs` of `prijzen` (één per kolom, zie Bubble Tea medium/large).
+Prijswijziging = alleen `menu.js` aanpassen. De pagina levert ook een schema.org `Menu` (JSON-LD) en de LocalBusiness-schema
+verwijst ernaar via `hasMenu`. De originele PDF-kaarten in `public/menu/` zijn als download gelinkt; die moeten bij een
+prijswijziging apart opnieuw worden aangeleverd. Knop "Menu" staat in de hero onder de statusbadge, plus een tekstlink
+onderaan de kaart-sectie.
 
 ## Huisstijl
 

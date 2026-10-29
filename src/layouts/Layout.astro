@@ -30,6 +30,7 @@ const schema = {
   priceRange: '€€',
   image: 'https://mio-gorinchem.nl/og-image.jpg',
   sameAs: socialUrls,
+  hasMenu: 'https://mio-gorinchem.nl/menu',
 };
 ---
 <!doctype html>
@@ -61,6 +62,7 @@ const schema = {
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@400;500&display=swap"
     rel="stylesheet"
   />
+  <slot name="head" />
 </head>
 <body>
   <slot />

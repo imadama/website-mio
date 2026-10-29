@@ -1,28 +1,28 @@
 ---
 const items = [
   {
-    naam: 'Gelato',
-    omschrijving: 'Romige gelato, elke dag vers gedraaid — van zacht vanille tot donkere cioccolato.',
-  },
-  {
-    naam: 'Wafels',
-    omschrijving: 'Knapperig van buiten, zacht van binnen — geserveerd warm met toppings naar keuze.',
-  },
-  {
     naam: 'Koffie',
-    omschrijving: 'Espresso, cappuccino of een fluweelzachte flat white — gezet met aandacht en Italiaanse bonen.',
+    omschrijving: 'Espresso, cappuccino en flat white — en seizoensspecials als de Pumpkin Spice Latte en Spanish Latte.',
   },
   {
-    naam: 'Thee',
-    omschrijving: 'Een stille kop thee — voor wie even pauze neemt.',
+    naam: 'Matcha',
+    omschrijving: 'Van Matcha Original tot Banana Cloud en Crème Brûlée Matcha — romig, fris en met een dessertaccent.',
   },
   {
-    naam: 'Gebakjes',
-    omschrijving: 'Dagelijks vers — klein van formaat, groot van smaak.',
+    naam: 'Bubble Tea & Mocktails',
+    omschrijving: 'Negen fruitsmaken bubble tea, Brown Sugar Boba met tapioca en frisse mocktails als de Classic Mojito.',
   },
   {
-    naam: 'Shakes',
-    omschrijving: 'Dikke, romige milkshakes op basis van verse gelato — een kinderdroom, opnieuw beleefd.',
+    naam: 'Broodjes',
+    omschrijving: 'L’Art du Pain — versgebakken broodjes op leisteen, van Bella Caprina tot Le Truffe Royal.',
+  },
+  {
+    naam: 'Gebak & Macarons',
+    omschrijving: 'Reuze macarons, luxe gebakjes, mini cheesecakes en de Cuore Fondente met vloeibaar chocoladehart.',
+  },
+  {
+    naam: 'Wafels & Cookies',
+    omschrijving: 'Les Gaufres d’Or met toppings naar keuze en warme skillet cookies met een bol ijs.',
   },
 ];
 ---
@@ -41,6 +41,10 @@ const items = [
         </div>
       ))}
     </div>
+
+    <p class="aanbod-cta reveal" style="transition-delay: 0.35s;">
+      <a href="/menu" class="aanbod-link">Bekijk het volledige menu</a>
+    </p>
   </div>
 </section>
 
@@ -91,6 +95,26 @@ const items = [
     color: var(--brown-soft);
     line-height: 1.55;
   }
+
+  .aanbod-cta {
+    text-align: center;
+    margin-top: 52px;
+  }
+  .aanbod-link {
+    display: inline-block;
+    padding-bottom: 6px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--brown-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-rich);
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .aanbod-link:hover { color: var(--gold-rich); }
+  .aanbod-link:focus-visible { outline: 2px solid var(--gold-rich); outline-offset: 4px; }
 
   @media (max-width: 640px) {
     .aanbod-grid { grid-template-columns: 1fr; }
