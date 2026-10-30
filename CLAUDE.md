@@ -27,7 +27,7 @@ src/
     Galerij.astro               # Fotogalerij "Binnenkijken" — leest src/assets/foto/, max 6, astro:assets (WebP, lazy)
     Aanbod.astro                # Kaart grid — items als array in frontmatter, link naar /menu
     Tijden.astro                # Openingstijden-lijst met vandaag-markering + OpenStatus-badge
-    OpenStatus.astro            # Live "Nu open · tot 22:00" / "Gesloten · morgen vanaf 16:00"-badge + verversscript
+    OpenStatus.astro            # Live "Nu open · tot 22:00" / "Gesloten · opent morgen om 16:00"-badge + verversscript
     Notify.astro                # Nieuwsbrief-formulier (voorheen coming-soon notificatie), POST naar /api/subscribe
     Footer.astro                # Logo, adres, email, socials, copyright
     Ornament.astro              # Herbruikbare goud-ornament (props: fullWidth, padded)
@@ -39,12 +39,10 @@ src/
     menu.js                     # Menukaart (dranken, broodjes, zoet) — bron voor /menu en de Menu-schema
   pages/
     index.astro                 # Assembleert alle componenten
-    menu.astro                  # Menupagina /menu: drie kaarten, sticky navigatie, PDF-downloads, Menu JSON-LD
+    menu.astro                  # Menupagina /menu: drie kaarten, sticky navigatie, Menu JSON-LD
     api/subscribe.js            # POST endpoint — slaat e-mail op in data/subscribers.csv
   styles/
     global.css                  # Design tokens, reset, animaties, gedeelde utilities
-public/
-  menu/*.pdf                    # Originele menukaarten (download-links op /menu)
 ```
 
 ## Openingstijden
@@ -53,7 +51,7 @@ Maandag gesloten, dinsdag t/m zondag 16:00 – 22:00.
 
 Tijden wijzig je **alleen** in `src/lib/openingstijden.js` (`hours`, per weekdag in minuten, `null` = gesloten).
 Daaruit volgen automatisch de lijst in `Tijden.astro`, de `openingHoursSpecification` in de LocalBusiness-schema (`Layout.astro`)
-de live status "Nu open · tot 22:00" / "Gesloten · morgen vanaf 16:00" (`OpenStatus.astro`, in hero én tijden-sectie)
+de live status "Nu open · tot 22:00" / "Gesloten · opent om 16:00" / "Gesloten · opent morgen om 16:00" (`OpenStatus.astro`, in hero én tijden-sectie)
 en de samenvatting in de meta-omschrijving.
 
 De status wordt server-side gerenderd en daarna in de browser elke minuut ververst. De tijd wordt berekend in
@@ -72,9 +70,8 @@ Alt-teksten per bestand in `altTeksten` in `Galerij.astro`. Geen foto's in de ma
 De kaart staat op `/menu` en wordt gerenderd uit `src/lib/menu.js`: drie kaarten (dranken, broodjes, zoet) met groepen
 en items. Prijzen als string met komma; een item heeft `prijs` of `prijzen` (één per kolom, zie Bubble Tea medium/large).
 Prijswijziging = alleen `menu.js` aanpassen. De pagina levert ook een schema.org `Menu` (JSON-LD) en de LocalBusiness-schema
-verwijst ernaar via `hasMenu`. De originele PDF-kaarten in `public/menu/` zijn als download gelinkt; die moeten bij een
-prijswijziging apart opnieuw worden aangeleverd. Knop "Menu" staat in de hero onder de statusbadge, plus een tekstlink
-onderaan de kaart-sectie.
+verwijst ernaar via `hasMenu`. Er is bewust geen PDF-download (op verzoek van de klant verwijderd). Knop "Menu" staat in de
+hero onder de statusbadge, plus een tekstlink onderaan de kaart-sectie.
 
 ## Huisstijl
 

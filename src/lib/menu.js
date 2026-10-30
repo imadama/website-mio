@@ -3,7 +3,7 @@
  *
  * Drie kaarten, elk met groepen en items. Prijzen als string met komma ("6,95").
  * Een item heeft óf `prijs`, óf `prijzen` (één per kolom in `kolommen` van de groep).
- * Bron: de PDF-kaarten van MIO (oktober 2026). De PDF's staan in public/menu/.
+ * Bron: de PDF-kaarten van MIO (oktober 2026).
  */
 export const kaarten = [
   {
@@ -11,7 +11,6 @@ export const kaarten = [
     label: 'Dranken',
     titel: 'La Carte des Boissons',
     intro: 'Coffee · Tea · Matcha · Bubble Tea · Mocktails',
-    pdf: '/menu/mio-dranken.pdf',
     groepen: [
       {
         naam: 'Coffee & Tea',
@@ -118,7 +117,6 @@ export const kaarten = [
     label: 'Broodjes',
     titel: "L'Art du Pain",
     intro: 'Waar ambacht en verfijning samenkomen',
-    pdf: '/menu/mio-broodjes.pdf',
     voetnoot: 'Versgebakken broodjes · geserveerd op zwarte leisteen met frisse saladegarnituur.',
     groepen: [
       {
@@ -158,7 +156,6 @@ export const kaarten = [
     label: 'Zoet',
     titel: 'La Collection Sucrée',
     intro: 'Een verfijnde collectie van zoete verleidingen',
-    pdf: '/menu/mio-zoet.pdf',
     voetnoot: 'Extra toppings, sauzen en fruit worden apart berekend.',
     groepen: [
       {

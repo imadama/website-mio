@@ -90,9 +90,9 @@ export function nuInGorinchem(date = new Date()) {
  * Huidige status. Bewust simpel: geen feestdagen of afwijkende tijden.
  *
  *   { open: true,  day, text: 'Nu open · tot 22:00' }
- *   { open: false, day, text: 'Gesloten · vandaag vanaf 16:00' }
- *   { open: false, day, text: 'Gesloten · morgen vanaf 16:00' }
- *   { open: false, day, text: 'Gesloten · dinsdag vanaf 16:00' }
+ *   { open: false, day, text: 'Gesloten · opent om 16:00' }
+ *   { open: false, day, text: 'Gesloten · opent morgen om 16:00' }
+ *   { open: false, day, text: 'Gesloten · opent dinsdag om 16:00' }
  */
 export function currentStatus(date = new Date()) {
   const { day, minutes } = nuInGorinchem(date);
@@ -107,8 +107,8 @@ export function currentStatus(date = new Date()) {
     const next = hours[d];
     if (!next) continue;
     if (i === 0 && minutes >= next.open) continue;
-    const when = i === 0 ? 'vandaag' : i === 1 ? 'morgen' : DAGEN_NL[d];
-    return { open: false, day, text: `Gesloten · ${when} vanaf ${fmt(next.open)}` };
+    const wanneer = i === 0 ? '' : i === 1 ? 'morgen ' : `${DAGEN_NL[d]} `;
+    return { open: false, day, text: `Gesloten · opent ${wanneer}om ${fmt(next.open)}` };
   }
 
   return { open: false, day, text: 'Gesloten' };
